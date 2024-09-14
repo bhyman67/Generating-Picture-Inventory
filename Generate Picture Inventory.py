@@ -3,8 +3,7 @@ from PIL import Image
 from PIL.ExifTags import TAGS
 import pandas as pd
 
-# Define the output file path
-output_file = 'Picture Inventory.xlsx'
+# +++++++++++++++++++++++++++++++++++++++++  UDF  +++++++++++++++++++++++++++++++++++++++++
 
 def get_date_taken(file_path):
     try:
@@ -19,10 +18,15 @@ def get_date_taken(file_path):
         pass
     return 'Unknown'
 
+# ++++++++++++++++++++++++++++++++++++++++  Script  ++++++++++++++++++++++++++++++++++++++++
+
+# Define the output file path
+output_file = 'Picture Inventory.xlsx'
+
 # Collect data
 data = []
 
-# Traverse the directory tree
+# Traverse the directory tree to grab the file paths
 for root, dirs, files in os.walk('./Pictures'):
     for file in files:
 
@@ -38,10 +42,10 @@ df = pd.DataFrame(data, columns=['Full Path (link to file directory)', 'File Nam
 
 # Write the DataFrame to an Excel file with hyperlinks
 with pd.ExcelWriter(output_file, engine='xlsxwriter') as writer:
+
     df.to_excel(writer, index=False, startrow=0)
     workbook = writer.book
     worksheet = writer.sheets['Sheet1']
-    # rename the sheet
     worksheet.title = 'Picture Inventory'
     
     # Add hyperlinks to the first column
@@ -54,28 +58,11 @@ print('Done!')
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-# Old code... 
+# Some concepts to understand:
 
-# https://stackoverflow.com/questions/23064549/get-date-and-time-when-photo-was-taken-from-exif-data-using-pil
-# https://stackoverflow.com/questions/44636152/how-to-modify-exif-data-in-python
+# EXIF stands for ‘Exchangeable Image File Format’
+#   -> a standard for storing metadata in image files
 
-# # Scan through pix 
-# #   -> read attributes and write to excel 
-# # Also want to be able to set a certain attribute(s) in a given folder
+# pillow python library for extracting exif data from images
 
-# # https://medium.com/geekculture/extract-exif-data-from-photos-using-python-440e598274f1 
-
-# import os
-
-# from PIL import Image
-
-# # # Loop thru pix in dir
-# # rootdir = r"D:\Pictures, Videos, Movies\Vehicles\Mustang"
-
-# # # loop thru all files
-# # with os.scandir(rootdir) as entries:
-# #     for entry in entries:
-# #         print(entry.stat())
-
-# img = Image.open(r'D:\Pictures, Videos, Movies\Vehicles\Mustang\1967mustangcp121503 - NOT MY CAR.jpg')
-# exif_data = img.getexif()
+# https://medium.com/geekculture/extract-exif-data-from-photos-using-python-440e598274f1 
