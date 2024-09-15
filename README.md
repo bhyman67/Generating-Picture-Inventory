@@ -1,9 +1,5 @@
-# Script for Organizing Pictures
+# Script for Generating an Excel Inventory for my Picture Files
 
-* Pull only the file names and look for duplicates
-* Picture count
-* All file paths in one tab
-  - And then all paths for each folder in it’s own tab 
-* Replace some file names with date taken 
+Here's a snip of what the data looks like in Excel:
 
-Compare and contrast between OneDrive and hard disk drive…
+![Screenshot](./Screenshot%202024-09-15%20102243.png)
