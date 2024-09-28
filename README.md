@@ -2,6 +2,10 @@
 
 This Python script automates the process of creating an inventory of image files. It searches for all picture files in a specified directory and outputs their names, locations, and clickable links into an Excel file. I used GitHub Copilot to help me develop this. 
 
+<div align="center">
+    <img src="./a4b98b62-5bb5-4738-8d6b-157b4b1b8a71.webp" alt="Example Image" width="500"/>
+</div>
+
 ## Features
 - Traverses through all picture files in a directory (and subdirectories).
 - Generates an Excel file listing each file's name, full path, and a hyperlink to open it.
