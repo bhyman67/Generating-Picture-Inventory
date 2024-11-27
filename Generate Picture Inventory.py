@@ -21,24 +21,28 @@ def get_date_taken(file_path):
 # ++++++++++++++++++++++++++++++++++++++++  Script  ++++++++++++++++++++++++++++++++++++++++
 
 # Define the output file path
-output_file = 'Picture Inventory.xlsx'
+output_file = os.path.join(os.pardir, 'Picture Inventory.xlsx')
 
 # Collect data
 data = []
 
 # Traverse the directory tree to grab the file paths
-for root, dirs, files in os.walk('./Pictures'):
+for root, dirs, files in os.walk(os.path.join(os.pardir, 'Pictures')):
     for file in files:
 
         # Get the full file path
-        full_path = os.path.join(root, file)
+        full_path = os.path.abspath(os.path.join(root, file))
         date_taken = get_date_taken(full_path)
 
+        # Extract the top-level folder
+        relative_path = os.path.relpath(full_path, os.path.join(os.pardir, 'Pictures'))
+        top_level_folder = relative_path.split(os.sep)[0]
+
         # Append the data to the list
-        data.append([full_path, file, date_taken])
+        data.append([full_path, file, date_taken, top_level_folder])
 
 # Create a DataFrame
-df = pd.DataFrame(data, columns=['Full Path (link to file directory)', 'File Name (link to the file)', 'Date Taken'])
+df = pd.DataFrame(data, columns=['Full Path (link to file directory)', 'File Name (link to the file)', 'Date Taken', 'Top Level Folder'])
 
 # Write the DataFrame to an Excel file with hyperlinks
 with pd.ExcelWriter(output_file, engine='xlsxwriter') as writer:
@@ -54,7 +58,7 @@ with pd.ExcelWriter(output_file, engine='xlsxwriter') as writer:
         worksheet.write_url(f'A{row_num}', directory_path, string=full_path)
         worksheet.write_url(f'B{row_num}', full_path, string=df.iloc[row_num-2, 1])
 
-print('Done!')
+input('Done!')
 
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
