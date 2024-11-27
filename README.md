@@ -1,4 +1,7 @@
-# Picture Inventory Generator
+<h1>
+    <p align="center">Picture Inventory Generator</p>
+</h1>
+
 
 This Python script automates the process of creating an inventory of image files. It searches for all picture files in a specified directory and outputs their names, locations, and clickable links into an Excel file. I used GitHub Copilot to help me develop this. 
 
