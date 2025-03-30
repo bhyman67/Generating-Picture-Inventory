@@ -22,7 +22,7 @@ def get_date_taken(file_path):
     return None
 
 def append_date_taken_to_filename(picture_dir):
-    
+
     for file_name in os.listdir(picture_dir):
         if file_name.lower().endswith(('.jpeg', '.heic')):
             file_path = os.path.join(picture_dir, file_name)
@@ -31,16 +31,24 @@ def append_date_taken_to_filename(picture_dir):
             if date_taken:
                 date_str = date_taken.strftime('%Y-%m-%d')
                 base, extension = os.path.splitext(file_name)
+                
+                # Skip renaming if the file name already starts with the date string
+                if base.startswith(date_str):
+                    print(f"File {file_name} already has the correct name. Skipping.")
+                    continue
+                
                 new_file_name = f"{date_str}_{base}{extension}"
                 new_file_path = os.path.join(picture_dir, new_file_name)
                 
                 if not os.path.exists(new_file_path):
                     os.rename(file_path, new_file_path)
+                    print(f"Renamed {file_name} to {new_file_name}")
                 else:
                     print(f"File {new_file_name} already exists. Skipping.")
 
 if __name__ == "__main__":
-    picture_dir = r"D:\__\Rename these" # os.getcwd()
+
+    picture_dir = r"C:\Users\bchym\Downloads\iCloud Photos\iCloud Photos" # os.getcwd()
     append_date_taken_to_filename(picture_dir)
     print("Done")
 
